@@ -38,4 +38,4 @@ jobs:
       uses: Azure/cli@1.0.4
       with:
         inlineScript:
-          az group create -n byhand
+          az group create -n byhand -l brazilsouth
