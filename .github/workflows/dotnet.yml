@@ -45,7 +45,7 @@ jobs:
           az group create -n rg${{env.environment}}${{env.acronym}}${{github.run_number}} -l brazilsouth
         
     - name: Create Function App
-      uses: Azure/arm-deploy@v1
+      uses: Azure/arm-deploy@1.0.3
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }},
         resourceGroupName: rg${{env.environment}}${{env.acronym}}${{github.run_number}},
