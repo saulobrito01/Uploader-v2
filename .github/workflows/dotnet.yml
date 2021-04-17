@@ -31,7 +31,7 @@ jobs:
       run: dotnet build --no-restore
       
     - name: Test units
-      run: dotnet test --no-build --no-restore
+      run: dotnet test --no-build --no-restore --configuration Release --output ./output
 
     - name: Login at Azure
       uses: azure/login@v1
@@ -51,3 +51,9 @@ jobs:
         resourceGroupName: rg${{env.environment}}${{env.acronym}}${{github.run_number}}
         template: ./iac/function-app.json
         parameters: buildNumber=${{ github.run_number }}
+        
+    - name: Deploy Function App
+      uses: Azure/functions-actions@v1.3.2
+      with:
+        app-name: fa${{env.environment}}${{env.acronym}}${{github.run_number}}
+        package: ./output
