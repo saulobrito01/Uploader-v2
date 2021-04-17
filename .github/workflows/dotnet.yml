@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  acronym: upld
+  environment: dev
+    
 jobs:
   build:
 
@@ -28,3 +32,22 @@ jobs:
       
     - name: Test units
       run: dotnet test --no-build --no-restore
+
+    - name: Login at Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: Create resource group
+      uses: Azure/cli@1.0.4
+      with:
+        inlineScript:
+          az group create -n rg${{env.environment}}${{env.acronym}}${{github.run_number}} -l brazilsouth
+        
+    - name: Create Function App
+      uses: Azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }},
+        resourceGroupName: rg${{env.environment}}${{env.acronym}}${{github.run_number}},
+        template: ./iac/function-app.json,
+        parameters: buildNumber=${{ github.run_number }}
