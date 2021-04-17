@@ -5,68 +5,70 @@
         {
             "namespace": "topdown",
             "members": {
-                "resourceNaming": {
-                    "parameters": [
-                        {
-                            "name": "resourceType",
-                            "type": "string"
-                        },
-                        {
-                            "name": "environment",
-                            "type": "string"
-                        },
-                        {
-                            "name": "acronym",
-                            "type": "string"
-                        },
-                        {
-                            "name": "buildNumber",
-                            "type": "string"
-                        }
-                    ],
-                    "output": {
-                        "type": "string",
-                        "value": "[concat(parameters('resourceType'),parameters('environment'),parameters('acronym'),padLeft(parameters('buildNumber'),3,'0')]"
-                    }
+              "resourceNaming": {
+                "parameters": [
+                  {
+                    "name": "resourceType",
+                    "type": "string"
+                  },
+                  {
+                    "name": "environment",
+                    "type": "string"
+                  },
+                  {
+                    "name": "acronym",
+                    "type": "string"
+                  },
+                  {
+                    "name": "buildNumber",
+                    "type": "string"
+                  }
+                ],
+                "output": {
+                  "type": "string",
+                  "value": "[concat(parameters('resourceType'),parameters('environment'),parameters('acronym'),parameters('buildNumber'))]"
                 }
+              }
             }
         }        
     ],
-    "parameters": {
-        "subscriptionId": {
-            "type": "string",
-            "defaultValue": "f23f194f-c1bf-4ea1-85ce-6e75cc22c0a1"
-        },
-        "name": {
-            "type": "string",
-            "defaultValue": "[topdown.resourceNaming('fa', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
-        },
-        "environment": {
-            "type": "dev"
-        },
-        "acronym": {
-            "type": "upld"
-        },
-        "buildNumber": {
-            "type": "string"
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "Brazil South"
-        },
-        "hostingPlanName": {
-            "type": "string",
-            "defaultValue": "[topdown.resourceNaming('hp', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
-        },
-        "serverFarmResourceGroup": {
-            "type": "string",
-            "defaultValue": "[topdown.resourceNaming('rg', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
-        },
-        "storageAccountName": {
-            "type": "string",
-            "defaultValue": "[topdown.resourceNaming('sa', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
-        }
+  "parameters": {
+    "subscriptionId": {
+      "type": "string",
+      "defaultValue": "f23f194f-c1bf-4ea1-85ce-6e75cc22c0a1"
     },
+    "name": {
+      "type": "string",
+      "defaultValue": "[topdown.resourceNaming('fa', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
+    },
+    "environment": {
+      "type": "string",
+      "defaultValue": "dev"
+    },
+    "acronym": {
+      "type": "string",
+      "defaultValue": "upld"
+    },
+    "buildNumber": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "Brazil South"
+    },
+    "hostingPlanName": {
+      "type": "string",
+      "defaultValue": "[topdown.resourceNaming('hp', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
+    },
+    "serverFarmResourceGroup": {
+      "type": "string",
+      "defaultValue": "[topdown.resourceNaming('rg', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "[topdown.resourceNaming('sa', parameters('environment'), parameters('acronym'), parameters('buildNumber'))]"
+    }
+  },
     "resources": [
         {
             "apiVersion": "2018-11-01",
