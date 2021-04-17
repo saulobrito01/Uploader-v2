@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -19,6 +21,14 @@ namespace UploaderFunctions
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var file = req.Form.Files["file"];
+
+            var connectionString = Environment.GetEnvironmentVariable("MediaStorage");
+            var blobServiceClient = new BlobServiceClient(connectionString);
+            var containerClient = blobServiceClient.GetBlobContainerClient("media");
+
+            await containerClient.CreateIfNotExistsAsync();
+
+            await containerClient.UploadBlobAsync($"{Guid.NewGuid()}_{file.FileName}", file.OpenReadStream());
 
             return new OkObjectResult($"'{file.Name}' has {file.Length}");
         }
