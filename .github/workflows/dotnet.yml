@@ -47,7 +47,7 @@ jobs:
     - name: Create Function App
       uses: Azure/arm-deploy@1.0.3
       with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }},
-        resourceGroupName: rg${{env.environment}}${{env.acronym}}${{github.run_number}},
-        template: ./iac/function-app.json,
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: rg${{env.environment}}${{env.acronym}}${{github.run_number}}
+        template: ./iac/function-app.json
         parameters: buildNumber=${{ github.run_number }}
