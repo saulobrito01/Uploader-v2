@@ -25,13 +25,13 @@ jobs:
         dotnet-version: 3.1.x
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore --configuration Release --output ./output
       
     - name: Build
       run: dotnet build --no-restore
       
     - name: Test units
-      run: dotnet test --no-build --no-restore --configuration Release --output ./output
+      run: dotnet test --no-build --no-restore
 
     - name: Login at Azure
       uses: azure/login@v1
